@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SaboresdeMama.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SaboresdeMama"
+    Shell.FlyoutBehavior="Flyout">
+
+    <FlyoutItem Title="Inicio">
+        <ShellContent
+            Title="Inicio"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Gestión de Pedidos">
+        <ShellContent
+            Title="Gestión de Pedidos"
+            ContentTemplate="{DataTemplate local:GestionPedidosPage}"
+            Route="GestionPedidosPage" />
+    </FlyoutItem>
+
+</Shell>
