@@ -20,4 +20,11 @@
             Route="GestionPedidosPage" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Recetas">
+        <ShellContent
+            Title="Recetas"
+            ContentTemplate="{DataTemplate local:RecetarioPage}"
+            Route="RecetarioPage" />
+    </FlyoutItem>
+
 </Shell>

@@ -6,7 +6,14 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        // Esta es la línea que agregamos para la navegación
         Routing.RegisterRoute(nameof(GestionPedidosPage), typeof(GestionPedidosPage));
+        Routing.RegisterRoute(nameof(RecetarioPage), typeof(RecetarioPage));
+        Routing.RegisterRoute(nameof(AgregarRecetaPage), typeof(AgregarRecetaPage));
+        Routing.RegisterRoute(nameof(RecetaDetallePage), typeof(RecetaDetallePage));
+
+        // ======================================================
+        // ===== AÑADIR ESTA LÍNEA =====
+        // ======================================================
+        Routing.RegisterRoute(nameof(EditarRecetaPage), typeof(EditarRecetaPage));
     }
 }

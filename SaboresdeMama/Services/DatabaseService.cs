@@ -10,7 +10,6 @@ namespace SaboresdeMama.Services
 
         public DatabaseService()
         {
-            // La inicialización se hará de forma asíncrona
         }
 
         private async Task InitializeAsync()
@@ -18,18 +17,18 @@ namespace SaboresdeMama.Services
             if (_initialized)
                 return;
 
-            // Ruta donde se guardará el archivo de la base de datos en el dispositivo
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "SaboresdeMama.db3");
 
-            // Crear la conexión y la tabla si no existen
             _database = new SQLiteAsyncConnection(databasePath);
+
             await _database.CreateTableAsync<Pedido>();
+            await _database.CreateTableAsync<Receta>();
 
             _initialized = true;
         }
 
-        // --- Operaciones CRUD (Crear, Leer, Actualizar, Borrar) ---
-
+        // --- Operaciones de Pedidos ---
+        // (El código de Pedidos sigue aquí...)
         public async Task<List<Pedido>> GetPedidosAsync()
         {
             await InitializeAsync();
@@ -46,6 +45,48 @@ namespace SaboresdeMama.Services
         {
             await InitializeAsync();
             await _database.DeleteAsync(pedido);
+        }
+
+
+        // --- Operaciones de Recetas ---
+
+        public async Task AddRecetaAsync(Receta receta)
+        {
+            await InitializeAsync();
+            await _database.InsertAsync(receta);
+        }
+
+        public async Task<List<Receta>> GetRecetasAsync()
+        {
+            await InitializeAsync();
+            return await _database.Table<Receta>().OrderBy(r => r.Nombre).ToListAsync();
+        }
+
+        public async Task<List<Receta>> SearchRecetasAsync(string searchTerm)
+        {
+            await InitializeAsync();
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetRecetasAsync();
+            }
+            return await _database.Table<Receta>()
+                .Where(r => r.Nombre.ToLower().Contains(searchTerm.ToLower()))
+                .ToListAsync();
+        }
+
+        public async Task DeleteRecetaAsync(Receta receta)
+        {
+            await InitializeAsync();
+            await _database.DeleteAsync(receta);
+        }
+
+        // ======================================================
+        // ===== NUEVO MÉTODO AÑADIDO (PARA ACTUALIZAR RECETAS) =====
+        // ======================================================
+        public async Task UpdateRecetaAsync(Receta receta)
+        {
+            await InitializeAsync();
+            await _database.UpdateAsync(receta);
         }
     }
 }

@@ -17,10 +17,16 @@ namespace SaboresdeMama
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Hemos eliminado la sección de Logging que daba error.
-
             builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddTransient<GestionPedidosPage>();
+            builder.Services.AddTransient<RecetarioPage>();
+            builder.Services.AddTransient<AgregarRecetaPage>();
+            builder.Services.AddTransient<RecetaDetallePage>();
+
+            // ======================================================
+            // ===== AÑADIR ESTA LÍNEA =====
+            // ======================================================
+            builder.Services.AddTransient<EditarRecetaPage>();
 
             return builder.Build();
         }
