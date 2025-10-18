@@ -22,11 +22,12 @@ namespace SaboresdeMama
             builder.Services.AddTransient<RecetarioPage>();
             builder.Services.AddTransient<AgregarRecetaPage>();
             builder.Services.AddTransient<RecetaDetallePage>();
+            builder.Services.AddTransient<EditarRecetaPage>();
 
             // ======================================================
             // ===== AÑADIR ESTA LÍNEA =====
             // ======================================================
-            builder.Services.AddTransient<EditarRecetaPage>();
+            builder.Services.AddTransient<VentasPage>();
 
             return builder.Build();
         }

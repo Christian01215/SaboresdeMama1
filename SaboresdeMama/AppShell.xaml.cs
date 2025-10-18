@@ -10,10 +10,11 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(RecetarioPage), typeof(RecetarioPage));
         Routing.RegisterRoute(nameof(AgregarRecetaPage), typeof(AgregarRecetaPage));
         Routing.RegisterRoute(nameof(RecetaDetallePage), typeof(RecetaDetallePage));
+        Routing.RegisterRoute(nameof(EditarRecetaPage), typeof(EditarRecetaPage));
 
         // ======================================================
         // ===== AÑADIR ESTA LÍNEA =====
         // ======================================================
-        Routing.RegisterRoute(nameof(EditarRecetaPage), typeof(EditarRecetaPage));
+        Routing.RegisterRoute(nameof(VentasPage), typeof(VentasPage));
     }
 }

@@ -47,7 +47,6 @@ public partial class GestionPedidosPage : ContentPage
 
     private async void OnEliminarClicked(object sender, EventArgs e)
     {
-        // Obtener el pedido asociado al botón que se presionó
         if ((sender as Button)?.CommandParameter is Pedido pedido)
         {
             bool confirmar = await DisplayAlert("Confirmar", $"¿Seguro que quieres eliminar el pedido '{pedido.DescripcionProducto}'?", "Sí", "No");
@@ -63,5 +62,35 @@ public partial class GestionPedidosPage : ContentPage
     {
         var pedidos = await _databaseService.GetPedidosAsync();
         PedidosCollectionView.ItemsSource = pedidos;
+    }
+
+    // ===============================================
+    // ===== NUEVO MÉTODO PARA COMPLETAR UN PEDIDO =====
+    // ===============================================
+    private async void OnCompletarClicked(object sender, EventArgs e)
+    {
+        if ((sender as Button)?.CommandParameter is Pedido pedido)
+        {
+            bool confirmar = await DisplayAlert("Confirmar Venta", $"¿Marcar el pedido '{pedido.DescripcionProducto}' como completado y mover a Ventas?", "Sí", "No");
+            if (confirmar)
+            {
+                // 1. Crear el nuevo objeto Venta
+                var nuevaVenta = new Venta
+                {
+                    DescripcionProducto = pedido.DescripcionProducto,
+                    Total = pedido.Total,
+                    FechaCompletado = DateTime.Now
+                };
+
+                // 2. Guardar la Venta en la base de datos
+                await _databaseService.AddVentaAsync(nuevaVenta);
+
+                // 3. Borrar el Pedido original
+                await _databaseService.DeletePedidoAsync(pedido);
+
+                // 4. Recargar la lista de pedidos pendientes
+                await LoadPedidosAsync();
+            }
+        }
     }
 }

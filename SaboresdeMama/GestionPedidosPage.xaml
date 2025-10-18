@@ -33,11 +33,18 @@
                             <Label Text="{Binding Total, StringFormat='Total: ${0}'}" />
                         </VerticalStackLayout>
 
-                        <Button Grid.Column="1" 
-                                Text="Eliminar" 
-                                BackgroundColor="Red"
-                                Clicked="OnEliminarClicked" 
-                                CommandParameter="{Binding .}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+
+                            <Button Text="Completar" 
+                                    BackgroundColor="Green"
+                                    Clicked="OnCompletarClicked" 
+                                    CommandParameter="{Binding .}" />
+
+                            <Button Text="Eliminar" 
+                                    BackgroundColor="Red"
+                                    Clicked="OnEliminarClicked" 
+                                    CommandParameter="{Binding .}" />
+                        </VerticalStackLayout>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

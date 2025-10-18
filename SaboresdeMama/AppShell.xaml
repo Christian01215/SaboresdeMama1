@@ -27,4 +27,11 @@
             Route="RecetarioPage" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Ventas">
+        <ShellContent
+            Title="Ventas"
+            ContentTemplate="{DataTemplate local:VentasPage}"
+            Route="VentasPage" />
+    </FlyoutItem>
+
 </Shell>
