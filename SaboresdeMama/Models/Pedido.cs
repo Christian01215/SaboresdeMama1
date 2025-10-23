@@ -11,9 +11,15 @@ namespace SaboresdeMama.Models
         [MaxLength(200), Indexed]
         public string DescripcionProducto { get; set; }
 
+        // ===================================
+        // ===== NUEVA PROPIEDAD AÑADIDA =====
+        [Indexed]
+        public string ClienteNombre { get; set; }
+        // ===================================
+
         public DateTime FechaEntrega { get; set; }
 
-        public string Estado { get; set; } // Pendiente, Entregado, Cancelado
+        public string Estado { get; set; }
 
         public double Total { get; set; }
     }

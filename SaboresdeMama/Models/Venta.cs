@@ -10,9 +10,13 @@ namespace SaboresdeMama.Models
 
         public string DescripcionProducto { get; set; }
 
+        // ===================================
+        // ===== NUEVA PROPIEDAD AÑADIDA =====
+        public string ClienteNombre { get; set; }
+        // ===================================
+
         public double Total { get; set; }
 
-        // Guardamos la fecha en que se completó la venta
         public DateTime FechaCompletado { get; set; }
     }
 }

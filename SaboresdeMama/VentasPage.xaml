@@ -14,6 +14,7 @@
                TextColor="#007F00" 
                HorizontalOptions="Center"
                Margin="0,10" />
+
         <BoxView HeightRequest="1" BackgroundColor="LightGray" />
 
         <Label Text="Historial de Ventas" FontSize="Medium" Margin="0,5" />
@@ -25,7 +26,10 @@
                         <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
 
                             <VerticalStackLayout Grid.Column="0" Spacing="5">
-                                <Label Text="{Binding DescripcionProducto}" FontSize="18" FontAttributes="Bold" />
+
+                                <Label Text="{Binding ClienteNombre}" FontSize="18" FontAttributes="Bold" />
+
+                                <Label Text="{Binding DescripcionProducto}" />
                                 <Label Text="{Binding FechaCompletado, StringFormat='Completado: {0:dd MMMM yyyy}'}" />
                                 <Label Text="{Binding Total, StringFormat='Total: ${0}'}" />
                             </VerticalStackLayout>

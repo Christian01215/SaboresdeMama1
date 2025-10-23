@@ -11,6 +11,12 @@ public partial class GestionPedidosPage : ContentPage
     {
         InitializeComponent();
         _databaseService = databaseService;
+
+        // ===============================================
+        // ===== ESTA ES LA LÍNEA QUE AÑADIMOS =====
+        // Bloquea el calendario para que no se puedan seleccionar fechas anteriores a hoy.
+        FechaDatePicker.MinimumDate = DateTime.Today;
+        // ===============================================
     }
 
     protected override async void OnAppearing()
@@ -21,7 +27,10 @@ public partial class GestionPedidosPage : ContentPage
 
     private async void OnGuardarClicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(DescripcionEntry.Text) || string.IsNullOrWhiteSpace(TotalEntry.Text))
+        // Validación para el nombre del cliente
+        if (string.IsNullOrWhiteSpace(ClienteNombreEntry.Text) ||
+            string.IsNullOrWhiteSpace(DescripcionEntry.Text) ||
+            string.IsNullOrWhiteSpace(TotalEntry.Text))
         {
             await DisplayAlert("Error", "Por favor, complete todos los campos.", "OK");
             return;
@@ -29,6 +38,7 @@ public partial class GestionPedidosPage : ContentPage
 
         var nuevoPedido = new Pedido
         {
+            ClienteNombre = ClienteNombreEntry.Text,
             DescripcionProducto = DescripcionEntry.Text,
             FechaEntrega = FechaDatePicker.Date,
             Total = double.Parse(TotalEntry.Text),
@@ -37,10 +47,10 @@ public partial class GestionPedidosPage : ContentPage
 
         await _databaseService.AddPedidoAsync(nuevoPedido);
 
-        // Limpiar los campos
+        ClienteNombreEntry.Text = string.Empty;
         DescripcionEntry.Text = string.Empty;
         TotalEntry.Text = string.Empty;
-        FechaDatePicker.Date = DateTime.Now;
+        FechaDatePicker.Date = DateTime.Now; // Resetea la fecha a hoy
 
         await LoadPedidosAsync();
     }
@@ -64,9 +74,6 @@ public partial class GestionPedidosPage : ContentPage
         PedidosCollectionView.ItemsSource = pedidos;
     }
 
-    // ===============================================
-    // ===== NUEVO MÉTODO PARA COMPLETAR UN PEDIDO =====
-    // ===============================================
     private async void OnCompletarClicked(object sender, EventArgs e)
     {
         if ((sender as Button)?.CommandParameter is Pedido pedido)
@@ -74,21 +81,16 @@ public partial class GestionPedidosPage : ContentPage
             bool confirmar = await DisplayAlert("Confirmar Venta", $"¿Marcar el pedido '{pedido.DescripcionProducto}' como completado y mover a Ventas?", "Sí", "No");
             if (confirmar)
             {
-                // 1. Crear el nuevo objeto Venta
                 var nuevaVenta = new Venta
                 {
+                    ClienteNombre = pedido.ClienteNombre,
                     DescripcionProducto = pedido.DescripcionProducto,
                     Total = pedido.Total,
                     FechaCompletado = DateTime.Now
                 };
 
-                // 2. Guardar la Venta en la base de datos
                 await _databaseService.AddVentaAsync(nuevaVenta);
-
-                // 3. Borrar el Pedido original
                 await _databaseService.DeletePedidoAsync(pedido);
-
-                // 4. Recargar la lista de pedidos pendientes
                 await LoadPedidosAsync();
             }
         }

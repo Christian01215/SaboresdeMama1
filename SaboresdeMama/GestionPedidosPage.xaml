@@ -8,6 +8,8 @@
 
         <Label Text="Nuevo Pedido" FontSize="Large" FontAttributes="Bold" />
 
+        <Entry x:Name="ClienteNombreEntry" Placeholder="Nombre del Cliente" />
+
         <Entry x:Name="DescripcionEntry" Placeholder="Descripción del producto" />
         <DatePicker x:Name="FechaDatePicker" />
         <Entry x:Name="TotalEntry" Placeholder="Monto Total" Keyboard="Numeric" />
@@ -28,13 +30,15 @@
                         </Grid.ColumnDefinitions>
 
                         <VerticalStackLayout Grid.Column="0">
-                            <Label Text="{Binding DescripcionProducto}" FontAttributes="Bold" />
+
+                            <Label Text="{Binding ClienteNombre}" FontSize="18" FontAttributes="Bold" />
+
+                            <Label Text="{Binding DescripcionProducto}" />
                             <Label Text="{Binding FechaEntrega, StringFormat='{0:dd/MM/yyyy}'}" />
                             <Label Text="{Binding Total, StringFormat='Total: ${0}'}" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
-
                             <Button Text="Completar" 
                                     BackgroundColor="Green"
                                     Clicked="OnCompletarClicked" 
